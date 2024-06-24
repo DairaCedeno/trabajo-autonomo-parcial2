@@ -79,7 +79,6 @@ DATABASES = {
     'default': {
         # postgres database
         'ENGINE': 'django.db.backends.postgresql',
-        #database name
         'NAME': 'web2',
         'USER': 'postgres',
         'PASSWORD': '123456789',
