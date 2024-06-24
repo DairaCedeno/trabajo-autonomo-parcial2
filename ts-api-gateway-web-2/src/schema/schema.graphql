@@ -1,0 +1,205 @@
+# Definición de los tipos de datos que se pueden consultar, modificar y eliminar en la API
+# Se definen los tipos de datos Cliente, Query, Mutation y Subscription
+# type [entity]: tipo de dato que representa una tabla de la base de datos
+# Query: tipo de dato que define las consultas que se pueden realizar
+# Mutation: tipo de dato que define las modificaciones que se pueden realizar
+# Subscription: tipo de dato que define las suscripciones que se pueden realizar
+
+type Cliente {
+  id: Int
+  nombre: String
+  apellido: String
+  cedulaIdentidad: String
+  telefono: String
+  direccion: String
+  email: String
+  facturas: [Factura]
+}
+
+type Empleado {
+  id: Int
+  nombre: String
+  apellido: String
+  cedulaIdentidad: String
+  telefono: String
+  direccion: String
+  facturas: [Factura]
+}
+
+type Categoria {
+  id: Int
+  nombre: String
+  estado: String
+  tipo: String
+  productos: [Producto]
+}
+
+type Producto {
+  id: Int
+  nombre: String
+  descripcion: String
+  precio: Float
+  stock: Int
+  categoria: Categoria
+  ProductoFacturas: [ProductoFactura]
+}
+
+type ProductoFactura {
+  id: Int
+  cantidad: Int
+  precio: Float
+  tamano: String
+  peso: Float
+  total: Float
+  facturas: [Factura]
+}
+
+type Factura {
+  id: Int
+  fecha: String
+  total: Float
+  descuento: Float
+  productos: [ProductoFactura]
+}
+
+type Query {
+  getCliente(id: Int!): Cliente
+  getClientes: [Cliente!]
+  getEmpleado(id: Int!): Empleado
+  getEmpleados: [Empleado!]
+  getCategoria(id: Int!): Categoria
+  getCategorias: [Categoria!]
+  getProducto(id: Int!): Producto
+  getProductos: [Producto!]
+  getProductoFactura(id: Int!): ProductoFactura
+  getProductoFacturas: [ProductoFactura!]
+  getFactura(id: Int!): Factura
+  getFacturas: [Factura!]
+}
+
+type Mutation {
+  createCliente(
+    nombre: String
+    apellido: String
+    cedulaIdentidad: String
+    telefono: String
+    direccion: String
+    email: String
+  ): Cliente
+
+  updateCliente(
+    id: Int!
+    nombre: String
+    apellido: String
+    cedulaIdentidad: String
+    telefono: String
+    direccion: String
+    email: String
+  ): Cliente
+
+  deleteCliente(id: Int!): Cliente
+  
+  createEmpleado(
+    nombre: String!
+    apellido: String!
+    cedulaIdentidad: String!
+    telefono: String!
+    direccion: String!
+  ): Empleado
+
+  updateEmpleado(
+    id: Int!
+    nombre: String
+    apellido: String
+    cedulaIdentidad: String
+    telefono: String
+    direccion: String
+  ): Empleado
+
+  deleteEmpleado(id: Int!): Empleado
+
+  createCategoria(
+    nombre: String
+    estado: String
+    tipo: String
+  ): Categoria
+
+  updateCategoria(
+    id: Int!
+    nombre: String
+    estado: String
+    tipo: String
+  ): Categoria
+
+  deleteCategoria(id: Int!): Categoria
+
+  createProducto(
+    nombre: String
+    descripcion: String
+    precio: Float
+    stock: Int
+    categoriaId: Int
+  ): Producto
+
+  updateProducto(
+    id: Int!
+    nombre: String
+    descripcion: String
+    precio: Float
+    stock: Int
+    categoriaId: Int
+  ): Producto
+
+  deleteProducto(id: Int!): Producto
+
+  createProductoFactura(
+    cantidad: Int!
+    precio: Float!
+    tamano: String!
+    peso: Float!
+    total: Float!
+    facturaId: Int!
+    productoId: Int!
+  ): ProductoFactura
+
+  updateProductoFactura(
+    id: Int!
+    cantidad: Int
+    precio: Float
+    tamano: String
+    peso: Float
+    total: Float
+    facturaId: Int
+    productoId: Int
+  ): ProductoFactura
+
+  deleteProductoFactura(id: Int!): ProductoFactura
+
+  createFactura(
+    fecha: String!
+    total: Float
+    descuento: Float
+    clienteId: Int
+    empleadoId: Int
+  ): Factura
+
+  updateFactura(
+    id: Int!
+    fecha: String
+    total: Float
+    descuento: Float
+    clienteId: Int
+    empleadoId: Int
+  ): Factura
+
+  deleteFactura(id: Int!): Factura
+}
+
+type Subscription {
+  clienteAdded: Cliente
+  empleadoAdded: Empleado
+  categoriaAdded: Categoria
+  productoAdded: Producto
+  productoFacturaAdded: ProductoFactura
+  facturaAdded: Factura
+}
