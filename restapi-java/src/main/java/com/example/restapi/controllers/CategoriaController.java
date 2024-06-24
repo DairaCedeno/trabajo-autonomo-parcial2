@@ -44,6 +44,11 @@ public class CategoriaController {
     //@PostMapping is used to handle POST requests.
     @PostMapping
     public CategoriaModel saveCategoria(@RequestBody CategoriaModel categoria) {
+        // validations for the category
+        if (categoria.getNombre() == null || categoria.getTipo() == null || categoria.getEstado() == null) {
+            categoria.setNombre("Todos los campos son requeridos");
+            return categoria;
+        }
         return this.categoriaService.saveCategoria(categoria);
     }
 
