@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+restapi-python/restapi/__pycache__/
+restapi-python/restapi/api/__pycache__/
+restapi-python/restapi/migrations/__pycache__/
+restapi-python/restapi_django/__pycache__/
+*.pyc
+
+# Django migrations
+restapi-python/restapi/migrations/*.pyc
+restapi-python/restapi/migrations/__pycache__/
+!restapi-python/restapi/migrations/__init__.py
+
+# Virtualenv
+.venv/
+env/
+ENV/
+venv/
+env.bak/
+venv.bak/
