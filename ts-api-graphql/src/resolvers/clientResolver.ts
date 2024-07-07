@@ -18,7 +18,7 @@ const CLIENTE_ADDED = "CLIENTE_ADDED";
 // En este archivo se definen los resolvers para la entidad cliente
 export const clienteResolvers = {
   Query: {
-    getCliente: async ({ id }: { id: number }) => getCliente(id),
+    getCliente: async (_: any, { id }: { id: number }) => getCliente(id),
     getClientes: async () => getClientes(),
   },
   // Mutation es un objeto que contiene funciones que representan los endpoints de la API
@@ -75,7 +75,7 @@ export const clienteResolvers = {
         email?: string;
       }
     ) => {
-      updateCliente(
+      const updatedCliente = await updateCliente(
         id,
         nombre,
         apellido,
@@ -84,6 +84,8 @@ export const clienteResolvers = {
         direccion,
         email
       );
+      pubsub.publish(CLIENTE_ADDED, { clienteAdded: updatedCliente });
+      return updatedCliente;
     },
 
     // deleteCliente es una función que recibe el argumento id y llama a la función deleteCliente del archivo clientService.ts

@@ -28,7 +28,10 @@ const API_BASE_URL = data.URL_API_JAVA;
 // obtener un empleado por id
 export const getEmpleado = async (id: number) => {
   const response = await axios.get(`${API_BASE_URL}/empleados/${id}`);
-  return response.data;
+  //facturas de empleado
+  const facturasResponse = await axios.get(`${data.URL_API_PYTHON}/api/facturas/byempleado/${id}/`);
+  const facturas = facturasResponse.data;
+  return { ...response.data, factura: facturas };
 }
 
 // obtener todos los empleados

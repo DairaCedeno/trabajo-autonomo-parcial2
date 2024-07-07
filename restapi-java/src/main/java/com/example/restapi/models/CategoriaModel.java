@@ -2,6 +2,8 @@ package com.example.restapi.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 @Table(name = "categoria")
 public class CategoriaModel {

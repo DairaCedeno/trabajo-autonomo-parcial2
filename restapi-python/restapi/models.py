@@ -45,7 +45,7 @@ class Categoria(models.Model):
         db_table = 'categoria'
 
 class Producto(models.Model):
-    id_producto = models.AutoField(primary_key=True)
+    id_producto = models.AutoField(primary_key=True , db_column='id_producto')
     nombre = models.CharField(max_length=50)
     precio = models.DecimalField(max_digits=10, decimal_places=2)  # Usa DecimalField para precios
     stock = models.PositiveIntegerField()  # Usa PositiveIntegerField para cantidades no negativas
@@ -64,19 +64,20 @@ class ProductoFactura(models.Model):
     cantidad = models.PositiveIntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     tamano = models.CharField(max_length=50)
-    peso = models.FloatField()
+    peso = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
         return f"{self.producto.nombre} - {self.cantidad} pcs"
       
     class Meta: 
         managed = False
-        db_table = 'productofactura'
+        db_table = 'producto_factura'
 
 class Factura(models.Model):
     id_factura = models.AutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, db_column='id_cliente')
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE, db_column='id_empleado')
+    ProductoFactura = models.ForeignKey(ProductoFactura, on_delete=models.CASCADE, db_column='id_producto_factura')
     fecha = models.DateField()
     total = models.DecimalField(max_digits=10, decimal_places=2)
     descuento = models.DecimalField(max_digits=5, decimal_places=2)

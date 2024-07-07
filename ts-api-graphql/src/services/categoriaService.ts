@@ -27,13 +27,23 @@ const API_BASE_URL = data.URL_API_JAVA;
 // obtener una categoria por id
 export const getCategoria = async (id: number) => {
   const response = await axios.get(`${API_BASE_URL}/categorias/${id}`);
-  return response.data;
+  const categoria = response.data;
+  const productosResponse = await axios.get(`${data.URL_API_PYTHON}/api/productos/bycategory/${id}/`);
+  // console.log("Productos de la categoria", productosResponse.data);
+  return { ...categoria, productos: productosResponse.data };
+
 }
 
 // obtener todas las categorias
 export const getCategorias = async () => {
   const response = await axios.get(`${API_BASE_URL}/categorias`);
-  return response.data;
+  const categorias = response.data;
+  for (const categoria of categorias) {
+    const productosResponse = await axios.get(`${data.URL_API_PYTHON}/api/productos/bycategory/${categoria.id}/`);
+    categoria.productos = productosResponse.data;
+  }
+  return categorias; 
+  
 }
 
 // crear una categoria
@@ -44,8 +54,16 @@ export const createCategoria = async (nombre: string, estado: string, tipo: stri
 
 // actualizar una categoria
 export const updateCategoria = async (id: number, nombre?: string, estado?: string, tipo?: string) => {
+  const categoriaBefore = await axios.get(`${API_BASE_URL}/categorias/${id}`);
+  const categoriaPre = categoriaBefore.data;
+  if (!nombre) nombre = categoriaPre.nombre;
+  if (!estado) estado = categoriaPre.estado;
+  if (!tipo) tipo = categoriaPre.tipo;
+    
   const response = await axios.put(`${API_BASE_URL}/categorias/${id}`, { nombre, estado, tipo });
-  return response.data;
+  const categoria = response.data;
+  const productosResponse = await axios.get(`${data.URL_API_PYTHON}/api/productos/bycategory/${id}/`);
+  return { ...categoria, productos: productosResponse.data };
 }
 
 // eliminar una categoria

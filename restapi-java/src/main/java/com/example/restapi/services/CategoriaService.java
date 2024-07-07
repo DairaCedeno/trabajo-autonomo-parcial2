@@ -18,7 +18,6 @@ public class CategoriaService {
     public ArrayList<CategoriaModel> getCategorias() {
         return (ArrayList<CategoriaModel>) categoriaRepository.findAll();
     }
-
     // Method to get a category by id
     public Optional<CategoriaModel> getCategoriaById(Long id) {
         return categoriaRepository.findById(id);
@@ -33,4 +32,5 @@ public class CategoriaService {
     public void deleteCategoria(Long id) {
         categoriaRepository.deleteById(id);
     }
+
 }

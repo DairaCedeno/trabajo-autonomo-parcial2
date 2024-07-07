@@ -16,4 +16,5 @@ public interface ICategoriaRepository extends JpaRepository<CategoriaModel, Long
     CategoriaModel save(CategoriaModel categoria);
     // method to delete a category by id
     void deleteById(Long id);
+
 }

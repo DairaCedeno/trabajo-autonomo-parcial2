@@ -13,7 +13,17 @@ type Cliente {
   telefono: String
   direccion: String
   email: String
-  facturas: [Factura]
+  factura: [facturaBrief!]
+}
+
+type ClienteBrief {
+  id: Int
+  nombre: String
+  apellido: String
+  cedulaIdentidad: String
+  telefono: String
+  direccion: String
+  email: String
 }
 
 type Empleado {
@@ -23,7 +33,16 @@ type Empleado {
   cedulaIdentidad: String
   telefono: String
   direccion: String
-  facturas: [Factura]
+  factura: [facturaBrief!]
+}
+
+type EmpleadoBrief {
+  id: Int
+  nombre: String
+  apellido: String
+  cedulaIdentidad: String
+  telefono: String
+  direccion: String
 }
 
 type Categoria {
@@ -31,50 +50,81 @@ type Categoria {
   nombre: String
   estado: String
   tipo: String
-  productos: [Producto]
+  productos: [ProductBrief!]
 }
 
 type Producto {
-  id: Int
+  id_producto: Int
   nombre: String
-  descripcion: String
   precio: Float
   stock: Int
-  categoria: Categoria
-  ProductoFacturas: [ProductoFactura]
+  categoria: CategoryBrief
+  productoFactura: [ProductFacturaBrief!]
+}
+
+type ProductBrief {
+  id_producto: ID
+  nombre: String
+  precio: Float
+  stock: Int
+}
+
+type CategoryBrief {
+  id: ID
+  nombre: String
+  estado: String
+  tipo: String
 }
 
 type ProductoFactura {
-  id: Int
+  id_producto_factura: Int
   cantidad: Int
   precio: Float
   tamano: String
   peso: Float
-  total: Float
-  facturas: [Factura]
+  producto: Producto
+  factura: [facturaBrief!]
+}
+
+type ProductFacturaBrief {
+  id_producto_factura: Int
+  cantidad: Int
+  precio: Float
+  tamano: String
+  peso: Float
+  factura: [facturaBrief!]
 }
 
 type Factura {
-  id: Int
+  id_factura: Int
+  cliente: ClienteBrief
+  empleado: EmpleadoBrief
   fecha: String
   total: Float
   descuento: Float
-  productos: [ProductoFactura]
+  productos: [ProductFacturaBrief!]
+}
+
+type facturaBrief {
+  id_factura: Int
+  fecha: String
+  total: Float
+  descuento: Float
 }
 
 type Query {
-  getCliente(id: Int!): Cliente
-  getClientes: [Cliente!]!
-  getEmpleado(id: Int!): Empleado
-  getEmpleados: [Empleado!]!
-  getCategoria(id: Int!): Categoria
-  getCategorias: [Categoria!]!
-  getProducto(id: Int!): Producto
-  getProductos: [Producto!]!
-  getProductoFactura(id: Int!): ProductoFactura
-  getProductoFacturas: [ProductoFactura!]!
-  getFactura(id: Int!): Factura
-  getFacturas: [Factura!]!
+  getCliente(id: Int): Cliente
+  getClientes: [Cliente]
+  getEmpleado(id: Int): Empleado
+  getEmpleados: [Empleado]
+  getCategoria(id: Int): Categoria
+  getCategorias: [Categoria]
+  getProducto(id: Int): Producto
+  getProductos: [Producto]
+  getProductoFactura(id: Int): ProductoFactura
+  getProductoFacturas: [ProductoFactura]
+  getFactura(id: Int): Factura
+  getFacturas: [Factura]
 }
 
 type Mutation {
@@ -135,31 +185,27 @@ type Mutation {
 
   createProducto(
     nombre: String
-    descripcion: String
     precio: Float
     stock: Int
-    categoriaId: Int
+    categoria: Int
   ): Producto
 
   updateProducto(
     id: Int!
     nombre: String
-    descripcion: String
     precio: Float
     stock: Int
-    categoriaId: Int
+    categoria: Int
   ): Producto
 
   deleteProducto(id: Int!): Producto
 
   createProductoFactura(
-    cantidad: Int!
-    precio: Float!
-    tamano: String!
-    peso: Float!
-    total: Float!
-    facturaId: Int!
-    productoId: Int!
+    cantidad: Int
+    precio: Float
+    tamano: String
+    peso: Float
+    id_producto: Int
   ): ProductoFactura
 
   updateProductoFactura(
@@ -168,9 +214,7 @@ type Mutation {
     precio: Float
     tamano: String
     peso: Float
-    total: Float
-    facturaId: Int
-    productoId: Int
+    id_producto: Int
   ): ProductoFactura
 
   deleteProductoFactura(id: Int!): ProductoFactura
@@ -202,4 +246,5 @@ type Subscription {
   productoAdded: Producto
   productoFacturaAdded: ProductoFactura
   facturaAdded: Factura
+
 }

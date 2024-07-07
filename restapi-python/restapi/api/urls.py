@@ -10,8 +10,9 @@ router = DefaultRouter()
 """ router.register(r'empleados', EmpleadoViewSet, basename='Empleado')
 router.register(r'clientes', ClienteViewSet, basename='Cliente')
 router.register(r'categorias', CategoriaViewSet, basename='Categoria') """
-router.register(r'productos', ProductoViewSet, basename='Producto')
-router.register(r'productosfactura', ProductoFacturaViewSet, basename='ProductoFactura')
-router.register(r'facturas', FacturaViewSet, basename='Factura')
+
+router.register(r'productos', ProductoViewSet)
+router.register(r'productosfactura', ProductoFacturaViewSet)
+router.register(r'facturas', FacturaViewSet)
 
 urlpatterns = router.urls

@@ -28,7 +28,10 @@ los endpoints de la api de java entidad cliente son:
 // obtener un cliente por id
 export const getCliente = async (id: number) => {
   const response = await axios.get(`${API_BASE_URL}/clientes/${id}`);
-  return response.data;
+  //factuas de un cliente
+  const facturasResponse = await axios.get(`${data.URL_API_PYTHON}/api/facturas/bycliente/${id}/`);
+  const facturas = facturasResponse.data;
+  return { ...response.data, factura: facturas };
 };
 
 // obtener todos los clientes
@@ -47,7 +50,9 @@ export const createCliente = async (nombre: string, apellido: string, cedulaIden
 
 // actualizar un cliente
 export const updateCliente = async (id: number, nombre?: string, apellido?: string, cedulaIdentidad?: string, telefono?: string, direccion?: string, email?: string) => {
+  console.log("Incoming data :", JSON.stringify({ nombre, apellido, cedulaIdentidad, telefono, direccion, email }));
   const response = await axios.put(`${API_BASE_URL}/clientes/${id}`, { nombre, apellido, cedulaIdentidad, telefono, direccion, email });
+  console.log(response.data);
   return response.data;
 };
 
